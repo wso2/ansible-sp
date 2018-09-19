@@ -29,9 +29,17 @@ databridge_config:
   keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
   keystore_password: wso2carbon
   data_receiver:
-    tcp_port: 9611
-    ssl_port: 9711
+    tcp_port: '9611'
+    ssl_port: '9711'
     hostname: 0.0.0.0
+
+data_agent_config:
+  thrift_agent:
+    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+    password: wos2carbon
+  binary_agent:
+    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+    password: wos2carbon
 
 secure_vault:
   private_key_alias: wso2carbon
@@ -42,3 +50,9 @@ secure_vault:
 # HA configuration
 state_persistence:
   enabled: false
+
+wso2_transport_http:
+  listener_configurations:
+    keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
+    password: wso2carbon
+    cert_password: wso2carbon

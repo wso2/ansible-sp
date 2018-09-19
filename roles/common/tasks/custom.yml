@@ -14,34 +14,4 @@
 #  limitations under the License.
 #----------------------------------------------------------------------------
 
----
-# This playbook deploys the whole application stack in this site.
-
-- name: Apply common configuration to all nodes
-  hosts: all
-  roles:
-    - common
-
-- name: Apply dashboard configuration to dashboard nodes
-  hosts:
-    - dashboard_1
-  roles:
-    - dashboard
-
-- name: Apply editor configuration to editor nodes
-  hosts:
-    - editor_1
-  roles:
-    - editor
-
-- name: Apply manager configuration to manager nodes
-  hosts:
-    - manager_1
-  roles:
-    - manager
-
-- name: Apply worker configuration to worker nodes
-  hosts:
-    - worker_1
-  roles:
-    - worker
+# Add configs for the custom files that are needed to be copied/replaced here.
