@@ -12,7 +12,75 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 ## Directory Structure
 ```
 .
-
+├── dev
+│   ├── group_vars
+│   │   └── sp.yml
+│   ├── host_vars
+│   │   ├── dashboard_1.yml
+│   │   ├── editor_1.yml
+│   │   ├── manager_1.yml
+│   │   └── worker_1.yml
+│   └── inventory
+├── docs
+│   ├── images
+│   └── Pattern-1.md
+├── files
+│   ├── mysql-connector-java-5.1.45-bin.jar
+│   └── wso2sp-linux-installer-x64-4.2.0.deb
+├── issue_template.md
+├── LICENSE
+├── pull_request_template.md
+├── README.md
+├── roles
+│   ├── dashboard
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── dashboard.sh.j2
+│   │       │   └── conf
+│   │       │       └── dashboard
+│   │       │           └── deployment.yaml.j2
+│   │       └── wso2sp-dashboard.service.j2
+│   ├── editor
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── editor.sh.j2
+│   │       │   └── conf
+│   │       │       └── editor
+│   │       │           └── deployment.yaml.j2
+│   │       └── wso2sp-editor.service.j2
+│   ├── manager
+│   │   ├── tasks
+│   │   │   ├── custom.yml
+│   │   │   └── main.yml
+│   │   └── templates
+│   │       ├── carbon-home
+│   │       │   ├── bin
+│   │       │   │   └── manager.sh.j2
+│   │       │   └── conf
+│   │       │       └── manager
+│   │       │           └── deployment.yaml.j2
+│   │       └── wso2sp-manager.service.j2
+│   └── worker
+│       ├── tasks
+│       │   ├── custom.yml
+│       │   └── main.yml
+│       └── templates
+│           ├── carbon-home
+│           │   ├── bin
+│           │   │   └── worker.sh.j2
+│           │   └── conf
+│           │       └── worker
+│           │           └── deployment.yaml.j2
+│           └── wso2sp-worker.service.j2
+└── site.yml
 
 ```
 
@@ -28,7 +96,7 @@ Copy the following files to `files` directory.
 ### 1. Run the existing scripts without customization
 The existing Ansible scripts contain the configurations to set-up WSO2 Stream Processor. In order to deploy that, you need to replace the `[ip_address]` and `[ssh_user]` given in the `inventory` file under `dev` folder by the IP of the location where you need to host the Stream Processor and the SSH user. An example is given below.
 ```
-[is]
+[sp]
 wso2sp ansible_host=172.28.128.4 ansible_user=vagrant
 ```
 

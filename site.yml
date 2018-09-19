@@ -20,6 +20,9 @@
 - name: WSO2 Stream Processor
   hosts:
     - dashboard_1
+    - editor_1
+    - manager_1
+    - worker_1
     # Uncomment the follow line to add another dashboard node.
     # - dashboard_2
   roles:

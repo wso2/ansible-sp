@@ -24,7 +24,6 @@ product_archive_deb: wso2sp-linux-installer-x64-4.2.0.deb
 product_archive_rpm: wso2sp-linux-installer-x64-4.2.0.rpm
 product_package_location: files
 jdbc_driver: mysql-connector-java-5.1.45-bin.jar
-systemd_path: /etc/systemd/system
 java_home: '"/usr/lib/wso2/wso2sp/4.2.0/jre/jre1.8.0_172"'
 
 worker:
