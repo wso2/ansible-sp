@@ -94,8 +94,8 @@
   - block:
     - name: "Copy WSO2SP worker service file"
       template:
-        src: "wso2sp-worker.service.j2"
-        dest: "{{ systemd_path }}/wso2sp-worker.service"
+        src: wso2sp-worker.service.j2
+        dest: /etc/systemd/system/wso2sp-worker.service
 
     - name: "Reload systemctl daemon"
       command: systemctl daemon-reload
