@@ -40,12 +40,12 @@ wso2.transport.http:
   listenerConfigurations:
     -
       id: "default"
-      host: "{{ wso2_carbon.host }}"
-      port: 9190
+      host: {{ wso2_transport_http.listener_configurations.default_host }}
+      port: {{ wso2_transport_http.listener_configurations.default_port }}
     -
       id: "msf4j-https"
-      host: "{{ wso2_carbon.host }}"
-      port: 9543
+      host: {{ wso2_transport_http.listener_configurations.msf4j_https_host }}
+      port: {{ wso2_transport_http.listener_configurations.msf4j_https_port }}
       scheme: https
       keyStoreFile: "{{ wso2_transport_http.listener_configurations.keystore_file }}"
       keyStorePassword: {{ wso2_transport_http.listener_configurations.password }}
@@ -86,8 +86,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: '7611'
-        sslPort: '7711'
+        tcpPort: {{ databridge_config.thrift_data_receiver.tcp_port }}
+        sslPort: {{ databridge_config.thrift_data_receiver.ssl_port }}
 
   -
       # Data receiver configuration
@@ -97,11 +97,11 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: '9611'
-        sslPort: '9711'
+        tcpPort: {{ databridge_config.binary_data_receiver.tcp_port }}
+        sslPort: {{ databridge_config.binary_data_receiver.ssl_port }}
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
-        hostName: {{ wso2_carbon.host }}
+        hostName: {{ databridge_config.binary_data_receiver.hostname }}
 
   # Configuration of the Data Agents - to publish events through databridge
 data.agent.config:

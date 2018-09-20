@@ -26,6 +26,8 @@ wso2_carbon:
 
 wso2_transport_http:
   listener_configurations:
+    default_port: 9390
+    msf4j_https_port: 9743
     keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
     password: wso2carbon
     cert_password: wso2carbon
@@ -34,6 +36,13 @@ databridge_config:
   worker_threads: 10
   keystore_location: ${carbon.home}/resources/security/wso2carbon.jks
   password: wso2carbon
+  thrift_data_receiver:
+    tcp_port: '7611'
+    ssl_port: '7711'
+  binary_data_receiver:
+    tcp_port: '9611'
+    ssl_port: '9711'
+    hostname: 0.0.0.0
 
 data_agent_config:
   thrift_agent:

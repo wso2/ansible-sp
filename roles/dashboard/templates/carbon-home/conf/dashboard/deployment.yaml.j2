@@ -56,8 +56,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: '7611'
-        sslPort: '7711'
+        tcpPort: {{ databridge_config.thrift_data_receiver.tcp_port }}
+        sslPort: {{ databridge_config.thrift_data_receiver.ssl_port }}
   -
       # Data receiver configuration
     dataReceiver:
@@ -66,11 +66,11 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: {{ databridge_config.data_receiver.tcp_port }}
-        sslPort: {{ databridge_config.data_receiver.ssl_port }}
+        tcpPort: {{ databridge_config.binary_data_receiver.tcp_port }}
+        sslPort: {{ databridge_config.binary_data_receiver.ssl_port }}
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
-        hostName: {{ databridge_config.data_receiver.hostname }}
+        hostName: {{ databridge_config.binary_data_receiver.hostname }}
 
   # Configuration of the Data Agents - to publish events through databridge
 data.agent.config:
@@ -435,7 +435,7 @@ wso2.transport.http:
   listenerConfigurations:
     - id: "default-https"
       host: "{{ wso2_carbon.host }}"
-      port: 9643
+      port: {{ wso2_transport_http.listener_configurations.port }}
       scheme: https
       keyStoreFile: "{{ wso2_transport_http.listener_configurations.keystore_file }}"
       keyStorePassword: {{ wso2_transport_http.listener_configurations.password }}

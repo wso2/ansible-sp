@@ -16,6 +16,16 @@
 
 # Add configs for the custom files that are needed to be copied/replaced here.
 ---
+  - name: Set rpm_setup_path
+    set_fact:
+      setup_path: "{{ rpm_setup_path }}"
+    when: ansible_os_family == "RedHat"
+
+  - name: Set deb_setup_path
+    set_fact:
+      setup_path: "{{ deb_setup_path }}"
+    when: ansible_os_family == "Debian"
+
   - block:
     - name: Create group
       group: name=wso2 state=present

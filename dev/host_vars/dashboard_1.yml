@@ -28,7 +28,10 @@ databridge_config:
   worker_threads: 10
   keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
   keystore_password: wso2carbon
-  data_receiver:
+  thrift_data_receiver:
+    tcp_port: '7611'
+    ssl_port: '7711'
+  binary_data_receiver:
     tcp_port: '9611'
     ssl_port: '9711'
     hostname: 0.0.0.0
@@ -53,6 +56,7 @@ state_persistence:
 
 wso2_transport_http:
   listener_configurations:
+    port: 9643
     keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
     password: wso2carbon
     cert_password: wso2carbon
