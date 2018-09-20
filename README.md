@@ -32,6 +32,10 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 ├── pull_request_template.md
 ├── README.md
 ├── roles
+│   ├── common
+│   │   └── tasks
+│   │       ├── custom.yml
+│   │       └── main.yml
 │   ├── dashboard
 │   │   ├── tasks
 │   │   │   ├── custom.yml
@@ -109,8 +113,6 @@ If you need to alter the configurations given, please change the parameterized v
 ### 2. Customize the WSO2 Ansible scripts
 
 The templates that are used by the Ansible scripts are in j2 format in-order to enable parameterization.
-
-The `axis2.xml.j2` file is added under `roles/wso2sp/templates/carbon-home/repositoy/conf/axis2/`, in order to enable customizations. You can add any other customizations to `custom.yml` under tasks of each role as well.
 
 #### Step 1
 Uncomment the following line in `main.yml` under the role you want to customize.
