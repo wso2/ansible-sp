@@ -33,7 +33,7 @@
     when: "(inventory_hostname in groups['sp'])"
     become: true
     become_method: sudo
-    become_user: "{{ wso2_user }}"
+    become_user: root
 
 # Enable customization by uncommenting the following and adding the changes to the customize.yml
       # - import_tasks: custom.yml

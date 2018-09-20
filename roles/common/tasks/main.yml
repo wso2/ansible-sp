@@ -19,11 +19,13 @@
   - name: Set rpm_setup_path
     set_fact:
       setup_path: "{{ rpm_setup_path }}"
+      java_home: '"/usr/lib64/wso2/wso2sp/4.2.0/jre/jre1.8.0_172"'
     when: ansible_os_family == "RedHat"
 
   - name: Set deb_setup_path
     set_fact:
       setup_path: "{{ deb_setup_path }}"
+      java_home: '"/usr/lib/wso2/wso2sp/4.2.0/jre/jre1.8.0_172"'
     when: ansible_os_family == "Debian"
 
   - block:
@@ -31,11 +33,13 @@
       group: name=wso2 state=present
       become: true
       become_method: sudo
+      ignore_errors: yes
 
     - name: Add wso2carbon user
       user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present
       become: true
       become_method: sudo
+      ignore_errors: yes
 
     - name: Create WSO2 directory
       file:
@@ -63,8 +67,8 @@
       when: ansible_os_family == "Debian"
 
     - name: Install a .rpm package
-      apt:
-        deb: "{{ product_path  }}/{{ product_archive_rpm  }}"
+      yum:
+        name: "{{ product_path  }}/{{ product_archive_rpm  }}"
       when: ansible_os_family == "RedHat"
 
     - name: Change the owner of WSO2 directory
@@ -76,16 +80,10 @@
         group: "{{ wso2_group }}"
         mode: 0755
 
-    become: true
-    become_user: root
-
-  - block:
     - name: "Copy JDBC Driver"
       copy:
        src: "files/{{ jdbc_driver }}"
        dest: "{{ setup_path }}/{{ product_name }}/{{ product_version }}/lib"
 
-    when: "(inventory_hostname in groups['sp'])"
     become: true
-    become_method: sudo
-    become_user: "{{ wso2_user }}"
+    become_user: root
