@@ -33,13 +33,11 @@
       group: name=wso2 state=present
       become: true
       become_method: sudo
-      ignore_errors: yes
 
     - name: Add wso2carbon user
       user: name="{{ wso2_user }}" shell=/bin/bash group=wso2 state=present
       become: true
       become_method: sudo
-      ignore_errors: yes
 
     - name: Create WSO2 directory
       file:
