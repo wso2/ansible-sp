@@ -1,0 +1,17 @@
+[sp]
+
+dashboard_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# dashboard_1 ansible_host=172.28.128.4 ansible_user=vagrant
+
+editor_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# editor_1 ansible_host=172.28.128.5 ansible_user=vagrant
+
+manager_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# manager_1 ansible_host=172.28.128.6 ansible_user=vagrant
+
+worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# worker_1 ansible_host=172.28.128.7 ansible_user=vagrant

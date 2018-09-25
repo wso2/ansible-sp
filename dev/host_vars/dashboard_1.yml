@@ -1,0 +1,63 @@
+# ----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# ----------------------------------------------------------------------------
+
+---
+# NOTE: The parameterized values has the default values from the original pack. Please change them according to your
+# requirements. If you need to add additional configurations, please use the custom.yml under each role.
+
+wso2_carbon:
+  ports:
+    offset: 2
+  id: wso2sp_dashboard_1
+  host: 0.0.0.0
+
+databridge_config:
+  worker_threads: 10
+  keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
+  keystore_password: wso2carbon
+  thrift_data_receiver:
+    tcp_port: 7611
+    ssl_port: 7711
+  binary_data_receiver:
+    tcp_port: 9611
+    ssl_port: 9711
+    hostname: 0.0.0.0
+
+data_agent_config:
+  thrift_agent:
+    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+    password: wos2carbon
+  binary_agent:
+    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+    password: wos2carbon
+
+secure_vault:
+  private_key_alias: wso2carbon
+  keystore_location: ${sys:carbon.home}/resources/security/securevault.jks
+  secret_properties_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
+  master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+
+# HA configuration
+state_persistence:
+  enabled: false
+
+wso2_transport_http:
+  listener_configurations:
+    host: 0.0.0.0
+    port: 9643
+    keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
+    password: wso2carbon
+    cert_password: wso2carbon
