@@ -17,47 +17,32 @@
 ---
 # NOTE: The parameterized values has the default values from the original pack. Please change them according to your
 # requirements. If you need to add additional configurations, please use the custom.yml under each role.
+hostname: 0.0.0.0
+ports_offset: 2
+server_id: wso2sp_dashboard_1
 
-wso2_carbon:
-  ports:
-    offset: 2
-  id: wso2sp_dashboard_1
-  host: 0.0.0.0
+# Data bridge configurations
+worker_threads: 10
+databridge_config_keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
+databridge_config_keystore_password: wso2carbon
+thrift_data_receiver_tcp_port: 7611
+thrift_data_receiver_ssl_port: 7711
+binary_data_receiver_tcp_port: 9611
+binary_data_receiver_ssl_port: 9711
 
-databridge_config:
-  worker_threads: 10
-  keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
-  keystore_password: wso2carbon
-  thrift_data_receiver:
-    tcp_port: 7611
-    ssl_port: 7711
-  binary_data_receiver:
-    tcp_port: 9611
-    ssl_port: 9711
-    hostname: 0.0.0.0
+truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+truststore_password: wos2carbon
 
-data_agent_config:
-  thrift_agent:
-    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
-    password: wos2carbon
-  binary_agent:
-    truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
-    password: wos2carbon
-
-secure_vault:
-  private_key_alias: wso2carbon
-  keystore_location: ${sys:carbon.home}/resources/security/securevault.jks
-  secret_properties_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
-  master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+secure_vault_private_key_alias: wso2carbon
+secure_vault_keystore_location: ${sys:carbon.home}/resources/security/securevault.jks
+secure_vault_secret_properties_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
+secure_vault_master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
 
 # HA configuration
-state_persistence:
-  enabled: false
+state_persistence_enabled: false
 
-wso2_transport_http:
-  listener_configurations:
-    host: 0.0.0.0
-    port: 9643
-    keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
-    password: wso2carbon
-    cert_password: wso2carbon
+# Transport http listener configurations
+default_port: 9643
+listener_configurations_keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
+listener_configurations_password: wso2carbon
+listener_configurations_cert_password: wso2carbon
