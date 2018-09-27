@@ -244,7 +244,7 @@ wso2.datasources:
         username: {{ sp_mgt_db.username }}
         password: {{ sp_mgt_db.password }}
         driverClassName: {{ sp_mgt_db.driver_class_name }}
-        maxPoolSize: 50
+        maxPoolSize: 10
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
@@ -262,7 +262,7 @@ wso2.datasources:
         username: {{ wso2_permissions_db.username }}
         password: {{ wso2_permissions_db.password }}
         driverClassName: {{ wso2_permissions_db.driver_class_name }}
-        maxPoolSize: 50
+        maxPoolSize: 10
         idleTimeout: 60000
         connectionTestQuery: SELECT 1
         validationTimeout: 30000
