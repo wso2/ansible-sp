@@ -1,0 +1,50 @@
+# ----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# ----------------------------------------------------------------------------
+
+---
+# NOTE: The parameterized values has the default values from the original pack. Please change them according to your
+# requirements. If you need to add additional configurations, please use the custom.yml under each role.
+
+hostname: 0.0.0.0
+ports_offset: 3
+server_id: wso2sp_editor_1
+
+# Transport httplistener configurations
+default_port: 9390
+msf4j_https_port: 9743
+listener_configurations_keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
+listener_configurations_keystore_password: wso2carbon
+listener_configurations_keystore_cert_password: wso2carbon
+siddhi_stores_query_api_listener_configurations_default_port: 7370
+
+worker_threads: 10
+databridge_config_keystore_location: ${sys:carbon.home}/resources/security/wso2carbon.jks
+databridge_config_keystore_password: wso2carbon
+thrift_data_receiver_tcp_port: '7611'
+thrift_data_receiver_ssl_port: '7711'
+binary_data_receiver_tcp_port: '9611'
+binary_data_receiver_ssl_port: '9711'
+
+truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+truststore_password: wos2carbon
+
+secure_vault_private_key_alias: wso2carbon
+secure_vault_keystore_location: ${sys:carbon.home}/resources/security/securevault.jks
+secure_vault_secret_properties_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
+secure_vault_master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+
+# Cluster configuration
+cluster_config_enabled: false

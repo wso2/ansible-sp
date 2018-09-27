@@ -1,0 +1,58 @@
+# ----------------------------------------------------------------------------
+#  Copyright (c) 2018 WSO2, Inc. http://www.wso2.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+# ----------------------------------------------------------------------------
+
+---
+# NOTE: The parameterized values has the default values from the original pack. Please change them according to your
+# requirements. If you need to add additional configurations, please use the custom.yml under each role.
+
+hostname: 0.0.0.0
+ports_offset: 1
+server_id: wso2sp_manager_1
+
+# Transport http listener configurations
+default_port: 9190
+msf4j_https_port: 9543
+listener_configurations_keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
+listener_configurations_keystore_password: wso2carbon
+listener_configurations_keystore_cert_password: wso2carbon
+
+# Data bridge configurations
+worker_threads: 10
+databridge_config_keystore_location: ${carbon.home}/resources/security/wso2carbon.jks
+databridge_config_keystore_password: wso2carbon
+thrift_data_receiver_tcp_port: '7611'
+thrift_data_receiver_ssl_port: '7711'
+binary_data_receiver_tcp_port: '9611'
+binary_data_receiver_ssl_port: '9711'
+
+truststore_path: ${sys:carbon.home}/resources/security/client-truststore.jks
+truststore_password: wos2carbon
+
+secure_vault_private_key_alias: wso2carbon
+secure_vault_keystore_location: ${sys:carbon.home}/resources/security/securevault.jks
+secure_vault_secret_properties_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/secrets.properties
+secure_vault_master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}/master-keys.yaml
+
+# Deployment configuration
+deployment_config_http_interface_host: localhost
+deployment_config_http_interface_port: 9543
+# define a mysql datasource in datasources and refer it from here.
+deployment_config_datasource: SP_MGT_DB
+deployment_config_min_resource_count: 1
+# kafka urls
+deployment_config_bootstrap_url: localhost:9092
+# zooKeeper urls
+deployment_config_zookeeper_urls: localhost:2181
