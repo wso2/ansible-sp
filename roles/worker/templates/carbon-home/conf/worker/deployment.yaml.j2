@@ -17,13 +17,15 @@
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
-  id: {{ wso2_carbon.id }}
+  id: {{ server_id }}
     # server name
   name: WSO2 Stream Processor
+    # server type
+#  type: wso2-sp
     # ports used by this server
   ports:
       # port offset
-    offset: 0
+    offset: {{ ports_offset }}
 
 wso2.transport.http:
   transportProperties:
@@ -40,26 +42,52 @@ wso2.transport.http:
   listenerConfigurations:
     -
       id: "default"
-      host: {{ wso2_transport_http.listener_configurations.default_host }}
-      port: {{ wso2_transport_http.listener_configurations.default_port }}
+      host: "{{ hostname }}"
+      port: {{ default_port }}
     -
       id: "msf4j-https"
-      host: {{ wso2_transport_http.listener_configurations.msf4j_https_host }}
-      port: {{ wso2_transport_http.listener_configurations.msf4j_https_port }}
+      host: "{{ hostname }}"
+      port: {{ msf4j_https_port }}
       scheme: https
-      keyStoreFile: "{{ wso2_transport_http.listener_configurations.keystore_file }}"
-      keyStorePassword: {{ wso2_transport_http.listener_configurations.password }}
-      certPass: {{ wso2_transport_http.listener_configurations.cert_password }}
+      keyStoreFile: "{{ listener_configurations_keystore_file }}"
+      keyStorePassword: {{ listener_configurations_keystore_password }}
+      certPass: {{ listener_configurations_keystore_cert_password }}
 
   senderConfigurations:
     -
       id: "http-sender"
 
+siddhi.stores.query.api:
+  transportProperties:
+    -
+      name: "server.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "client.bootstrap.socket.timeout"
+      value: 60
+    -
+      name: "latency.metrics.enabled"
+      value: true
+
+  listenerConfigurations:
+    -
+      id: "default"
+      host: "{{ hostname }}"
+      port: 7070
+    -
+      id: "msf4j-https"
+      host: "{{ hostname }}"
+      port: 7443
+      scheme: https
+      keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
+      keyStorePassword: wso2carbon
+      certPass: wso2carbon
+
   # Configuration used for the databridge communication
 databridge.config:
     # No of worker threads to consume events
     # THIS IS A MANDATORY FIELD
-  workerThreads: {{ databridge_config.worker_threads }}
+  workerThreads: {{ worker_threads }}
     # Maximum amount of messages that can be queued internally in MB
     # THIS IS A MANDATORY FIELD
   maxEventBufferCapacity: 10000000
@@ -68,10 +96,10 @@ databridge.config:
   eventBufferSize: 2000
     # Keystore file path
     # THIS IS A MANDATORY FIELD
-  keyStoreLocation : {{ databridge_config.keystore_location }}
+  keyStoreLocation : {{ databridge_config_keystore_location }}
     # Keystore password
     # THIS IS A MANDATORY FIELD
-  keyStorePassword : {{ databridge_config.password }}
+  keyStorePassword : {{ databridge_config_keystore_password }}
     # Session Timeout value in mins
     # THIS IS A MANDATORY FIELD
   clientTimeoutMin: 30
@@ -86,8 +114,8 @@ databridge.config:
       type: Thrift
         # Data receiver properties
       properties:
-        tcpPort: {{ databridge_config.thrift_data_receiver.tcp_port }}
-        sslPort: {{ databridge_config.thrift_data_receiver.ssl_port }}
+        tcpPort: {{ thrift_data_receiver_tcp_port }}
+        sslPort: {{ thrift_data_receiver_ssl_port }}
 
   -
       # Data receiver configuration
@@ -97,11 +125,11 @@ databridge.config:
       type: Binary
         # Data receiver properties
       properties:
-        tcpPort: {{ databridge_config.binary_data_receiver.tcp_port }}
-        sslPort: {{ databridge_config.binary_data_receiver.ssl_port }}
+        tcpPort: {{ binary_data_receiver_tcp_port }}
+        sslPort: {{ binary_data_receiver_ssl_port }}
         tcpReceiverThreadPoolSize: '100'
         sslReceiverThreadPoolSize: '100'
-        hostName: {{ databridge_config.binary_data_receiver.hostname }}
+        hostName: {{ hostname }}
 
   # Configuration of the Data Agents - to publish events through databridge
 data.agent.config:
@@ -120,9 +148,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: '{{ data_agent_config.thrift_agent.truststore_path }}'
+      trustStorePath: '{{ truststore_path }}'
         # Trust store password
-      trustStorePassword: '{{ data_agent_config.thrift_agent.password }}'
+      trustStorePassword: '{{ truststore_password }}'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -169,9 +197,9 @@ data.agent.config:
         # Data publisher strategy
       publishingStrategy: async
         # Trust store path
-      trustStorePath: '{{ data_agent_config.binary_agent.truststore_path }}'
+      trustStorePath: '{{ truststore_path }}'
         # Trust store password
-      trustStorePassword: '{{ data_agent_config.binary_agent.password }}'
+      trustStorePassword: '{{ truststore_password }}'
         # Queue Size
       queueSize: 32768
         # Batch Size
@@ -284,13 +312,13 @@ wso2.securevault:
   secretRepository:
     type: org.wso2.carbon.secvault.repository.DefaultSecretRepository
     parameters:
-      privateKeyAlias: {{secure_vault.private_key_alias }}
-      keystoreLocation: {{ secure_vault.keystore_location }}
-      secretPropertiesFile: {{ secure_vault.secret_properties_file }}
+      privateKeyAlias: {{secure_vault_private_key_alias }}
+      keystoreLocation: {{ secure_vault_keystore_location }}
+      secretPropertiesFile: {{ secure_vault_secret_properties_file }}
   masterKeyReader:
     type: org.wso2.carbon.secvault.reader.DefaultMasterKeyReader
     parameters:
-      masterKeyReaderFile: {{ secure_vault.master_key_reader_file }}
+      masterKeyReaderFile: {{ secure_vault_master_key_reader_file }}
 
   # Datasource Configurations
 wso2.datasources:
@@ -303,7 +331,7 @@ wso2.datasources:
           idleTimeout: 60000
           isAutoCommit: false
           jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
-          maxPoolSize: 50
+          maxPoolSize: 10
           password: wso2carbon
           username: wso2carbon
           validationTimeout: 30000
@@ -319,11 +347,11 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: '{{ wso2_metrics_db.url }}'
-          username: {{ wso2_metrics_db.username }}
-          password: {{ wso2_metrics_db.password }}
-          driverClassName: {{ wso2_metrics_db.driver_class_name }}
-          maxPoolSize: 50
+          jdbcUrl: '{{ wso2_metrics_db_url }}'
+          username: {{ wso2_metrics_db_username }}
+          password: {{ wso2_metrics_db_password }}
+          driverClassName: {{ wso2_metrics_db_driver_class_name }}
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -337,11 +365,11 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: '{{ wso2_permissions_db.url }}'
-          username: {{ wso2_permissions_db.username }}
-          password: {{ wso2_permissions_db.password }}
-          driverClassName: {{ wso2_permissions_db.driver_class_name }}
-          maxPoolSize: 50
+          jdbcUrl: '{{ wso2_permissions_db_url }}'
+          username: {{ wso2_permissions_db_username }}
+          password: {{ wso2_permissions_db_password }}
+          driverClassName: {{ wso2_permissions_db_driver_class_name }}
+          maxPoolSize: 10
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -359,7 +387,7 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -376,7 +404,7 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
@@ -389,23 +417,129 @@ wso2.datasources:
       definition:
         type: RDBMS
         configuration:
-          jdbcUrl: '{{ message_tracing_db.url }}'
-          username: {{ message_tracing_db.username }}
-          password: {{ message_tracing_db.password }}
-          driverClassName: {{ message_tracing_db.driver_class_name }}
+          jdbcUrl: '{{ message_tracing_db_url }}'
+          username: {{ message_tracing_db_username }}
+          password: {{ message_tracing_db_password }}
+          driverClassName: {{ message_tracing_db_driver_class_name }}
+          maxPoolSize: 30
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
+          validationTimeout: 30000
+          isAutoCommit: false
+
+    - name: EI_ANALYTICS
+      description: "The datasource used for EI Analytics dashboard feature"
+      jndiConfig:
+        name: jdbc/EI_ANALYTICS
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/EI_ANALYTICS;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 50
+          idleTimeout: 60000
+          validationTimeout: 30000
+          isAutoCommit: false
+
+
+    - name: IS_ANALYTICS_DB
+      description: "The data source used for WSO2 IS Analytics statistics"
+      jndiConfig:
+        name: jdbc/IS_ANALYTICS_DB
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/IS_ANALYTICS_DB;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 50
+          idleTimeout: 60000
+          validationTimeout: 30000
+          isAutoCommit: false
+
+    - name: GEO_LOCATION_DATA
+      description: "The data source used for geo location database"
+      jndiConfig:
+        name: jdbc/GEO_LOCATION_DATA
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/GEO_LOCATION_DATA;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 50
+          idleTimeout: 60000
+          validationTimeout: 30000
+          isAutoCommit: false
+
+    - name: APIM_ANALYTICS_DB
+      description: "The datasource used for APIM statistics aggregated data."
+      jndiConfig:
+        name: jdbc/APIM_ANALYTICS_DB
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_STATS_DB;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
           maxPoolSize: 50
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
 
+    - name: WSO2AM_MGW_ANALYTICS_DB
+      description: "The datasource used for APIM MGW analytics data."
+      jndiConfig:
+        name: jdbc/WSO2AM_MGW_ANALYTICS_DB
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/worker/database/WSO2AM_MGW_ANALYTICS_DB;AUTO_SERVER=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 50
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
+          validationTimeout: 30000
+          isAutoCommit: false
+
+siddhi:
+  extensions:
+    -
+      extension:
+        name: 'findCountryFromIP'
+        namespace: 'geo'
+        properties:
+          geoLocationResolverClass: org.wso2.extension.siddhi.execution.geo.internal.impl.DefaultDBBasedGeoLocationResolver
+          isCacheEnabled: true
+          cacheSize: 10000
+          isPersistInDatabase: true
+          datasource: GEO_LOCATION_DATA
+    -
+      extension:
+        name: 'findCityFromIP'
+        namespace: 'geo'
+        properties:
+          geoLocationResolverClass: org.wso2.extension.siddhi.execution.geo.internal.impl.DefaultDBBasedGeoLocationResolver
+          isCacheEnabled: true
+          cacheSize: 10000
+          isPersistInDatabase: true
+          datasource: GEO_LOCATION_DATA
+
   # Cluster Configuration
 cluster.config:
-  enabled: {{ cluster_config.enabled }}
+  enabled: {{ cluster_config_enabled }}
   groupId:  sp
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource:
+    datasource: WSO2_CARBON_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
@@ -413,17 +547,19 @@ cluster.config:
   # Sample of deployment.config for Two node HA
 #deployment.config:
 #  type: ha
-#  liveSync:
-#    enabled: true
+#  eventSyncServer:
+#    host: localhost
+#    port: 9893
 #    advertisedHost: localhost
-#    advertisedPort: 9090
-#    username: admin
-#    password: admin
-#  outputSyncInterval: 10000
-#  stateSyncGracePeriod: 60000
-#  sinkQueueCapacity: 20000
-#  sourceQueueCapacity: 20000
-#  retryAppSyncPeriod: 60000
+#    advertisedPort: 9893
+#    bossThreads: 10
+#    workerThreads: 10
+#  eventSyncClientPool:
+#    maxActive: 10
+#    maxTotal: 10
+#    maxIdle: 10
+#    maxWait: 60000
+#    minEvictableIdleTimeMillis: 120000
 
   # Sample of deployment.config for Distributed deployment
 #deployment.config:
@@ -443,3 +579,9 @@ cluster.config:
 #      port: 9543
 #      username: admin
 #      password: admin
+
+  # Configuration for enabling analytics solutions when server type in Carbon Configuration is set as 'wso2-sp'.
+#analytics.solutions:
+#  IS-analytics.enabled: true
+#  APIM-analytics.enabled: true
+#  EI-analytics.enabled: true
