@@ -28,3 +28,6 @@ files/*
 
 # Auto-generated .retry files
 *.retry
+
+# Mac file
+.DS_Store
