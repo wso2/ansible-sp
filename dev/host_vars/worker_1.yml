@@ -25,6 +25,7 @@ server_id: wso2sp_worker_1
 # Transport http listener configurations
 default_port: 9090
 msf4j_https_port: 9443
+siddhi_stores_query_api_listener_configurations_default_port: 7070
 listener_configurations_keystore_file: ${carbon.home}/resources/security/wso2carbon.jks
 listener_configurations_keystore_password: wso2carbon
 listener_configurations_keystore_cert_password: wso2carbon
