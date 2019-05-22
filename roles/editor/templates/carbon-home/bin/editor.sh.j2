@@ -14,8 +14,8 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-export JAVA_HOME={{ java_home }};
 cygwin=false;
+export JAVA_HOME={{ java_home }}; 
 darwin=false;
 os400=false;
 mingw=false;
@@ -63,5 +63,5 @@ EDITOR_INIT_SCRIPT="$CARBON_HOME/wso2/editor/bin/carbon.sh"
 
 # If the daemon is not there, then exit.
 
-$EDITOR_INIT_SCRIPT $*
+"$EDITOR_INIT_SCRIPT" $*
 exit;

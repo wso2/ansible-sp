@@ -26,7 +26,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   └── Pattern-1.md
 ├── files
 │   ├── mysql-connector-java-5.1.45-bin.jar
-│   └── wso2sp-linux-installer-x64-4.3.0.deb
+│   └── wso2sp-linux-installer-x64-4.4.0.deb
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -92,7 +92,7 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 
 Copy the following files to `files` directory.
 
-1. [WSO2 Stream Processor 4.3.0 package](https://wso2.com/analytics-and-stream-processing/install/)
+1. [WSO2 Stream Processor 4.4.0 package](https://wso2.com/analytics-and-stream-processing/install/)
 2. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
 
 ## Running WSO2 Stream Processor Ansible scripts
