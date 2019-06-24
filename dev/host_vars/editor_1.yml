@@ -48,3 +48,10 @@ secure_vault_master_key_reader_file: ${sys:carbon.home}/conf/${sys:wso2.runtime}
 
 # Cluster configuration
 cluster_config_enabled: false
+
+# List of configuration file templates, and the paths they should be written to
+config_files:
+  - { src: 'carbon-home/conf/editor/deployment.yaml.j2',
+      dest: '{{ carbon_home }}/conf/editor/deployment.yaml' }
+  - { src: 'carbon-home/bin/editor.sh.j2',
+      dest: '{{ carbon_home }}/bin/editor.sh' }

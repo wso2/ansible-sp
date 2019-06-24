@@ -16,15 +16,17 @@
 
 wso2_group: wso2
 wso2_user: wso2carbon
-deb_setup_path: /usr/lib/wso2
-rpm_setup_path: /usr/lib64/wso2
 product_name: wso2sp
 product_version: 4.4.0
-product_path: /opt/wso2
-product_archive_deb: wso2sp-linux-installer-x64-4.4.0.deb
-product_archive_rpm: wso2sp-linux-installer-x64-4.4.0.rpm
+target: /mnt
 product_package_location: files
-jdbc_driver: mysql-connector-java-5.1.45-bin.jar
+jdbc_driver: mysql-connector-java-5.1.47-bin.jar
+
+# JDK Distributions
+jdk_name: amazon-corretto-8.202.08.2-linux-x64
+java_dir: /opt
+java_symlink: "{{ java_dir }}/java"
+java_home: "{{ java_dir }}/{{ jdk_name }}"
 
 # Data Sources Configurations
 wso2_dashboard_db_url: jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/DASHBOARD_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE
