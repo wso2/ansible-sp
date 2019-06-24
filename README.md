@@ -7,14 +7,15 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 - Ubuntu 16.04 or higher
 ## Supported Ansible Versions
 
-- Ansible 2.6.2
+- Ansible 2.8.0
 
 ## Directory Structure
 ```
 .
 ├── dev
 │   ├── group_vars
-│   │   └── sp.yml
+│   │   ├── sp.yml
+│   │   └── worker.yml
 │   ├── host_vars
 │   │   ├── dashboard_1.yml
 │   │   ├── editor_1.yml
@@ -25,8 +26,11 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │   ├── images
 │   └── Pattern-1.md
 ├── files
-│   ├── mysql-connector-java-5.1.45-bin.jar
-│   └── wso2sp-linux-installer-x64-4.4.0.deb
+│   ├── lib
+│   │   ├── amazon-corretto-8.202.08.2-linux-x64.tar.gz
+│   │   └── mysql-connector-java-5.1.47-bin.jar
+│   └── packs
+│       └── wso2sp-4.4.0.zip
 ├── issue_template.md
 ├── LICENSE
 ├── pull_request_template.md
@@ -84,16 +88,23 @@ This repository contains the Ansible scripts for installing and configuring WSO2
 │           │       └── worker
 │           │           └── deployment.yaml.j2
 │           └── wso2sp-worker.service.j2
+├── scripts
+│   ├── update.sh
+│   └── update_README.md
 └── site.yml
 
 ```
 
 ## Packs to be Copied
 
-Copy the following files to `files` directory.
+Copy the following files to `files/packs` directory.
 
 1. [WSO2 Stream Processor 4.4.0 package](https://wso2.com/analytics-and-stream-processing/install/)
-2. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
+
+Copy the following files to `files/lib` directory.
+
+1. [MySQL Connector/J](https://dev.mysql.com/downloads/connector/j/5.1.html)
+2. [Amazon Coretto for Linux x64 JDK](https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html)
 
 ## Running WSO2 Stream Processor Ansible scripts
 
