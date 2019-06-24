@@ -49,6 +49,7 @@
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
 
+# Enable use of the MySQL JDBC driver by uncommenting the following
 #    - name: Copy JDBC Driver
 #      copy:
 #       src: "{{ product_package_location }}/lib/{{ jdbc_driver }}"
