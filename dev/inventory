@@ -1,3 +1,9 @@
+[worker]
+
+worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
+# Example
+# worker_1 ansible_host=172.28.128.7 ansible_user=vagrant
+
 [sp]
 
 dashboard_1 ansible_host=[ip_address] ansible_user=[ssh_user]
@@ -12,6 +18,5 @@ manager_1 ansible_host=[ip_address] ansible_user=[ssh_user]
 # Example
 # manager_1 ansible_host=172.28.128.6 ansible_user=vagrant
 
-worker_1 ansible_host=[ip_address] ansible_user=[ssh_user]
-# Example
-# worker_1 ansible_host=172.28.128.7 ansible_user=vagrant
+[sp:children]
+worker

@@ -3,10 +3,10 @@ Description=WSO2 Stream Processor - Editor
 After=network.target
 
 [Service]
-ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/editor.sh start
-ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/editor.sh stop
-ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/editor.sh restart
-PIDFile={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/editor/runtime.pid
+ExecStart={{ carbon_home }}/bin/editor.sh start
+ExecStop={{ carbon_home }}/bin/editor.sh stop
+ExecRestart={{ carbon_home }}/bin/editor.sh restart
+PIDFile={{ carbon_home }}/wso2/editor/runtime.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}
 Type=forking
