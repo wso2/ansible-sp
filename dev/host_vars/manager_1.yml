@@ -56,3 +56,10 @@ deployment_config_min_resource_count: 1
 deployment_config_bootstrap_url: localhost:9092
 # zooKeeper urls
 deployment_config_zookeeper_urls: localhost:2181
+
+# List of configuration file templates, and the paths they should be written to
+config_files:
+  - { src: 'carbon-home/conf/manager/deployment.yaml.j2',
+      dest: '{{ carbon_home }}/conf/manager/deployment.yaml' }
+  - { src: 'carbon-home/bin/manager.sh.j2',
+      dest: '{{ carbon_home }}/bin/manager.sh' }
