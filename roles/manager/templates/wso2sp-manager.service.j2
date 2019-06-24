@@ -3,10 +3,10 @@ Description=WSO2 Stream Processor - Manager
 After=network.target
 
 [Service]
-ExecStart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/manager.sh start
-ExecStop={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/manager.sh stop
-ExecRestart={{ setup_path }}/{{ product_name }}/{{ product_version }}/bin/manager.sh restart
-PIDFile={{ setup_path }}/{{ product_name }}/{{ product_version }}/wso2/manager/runtime.pid
+ExecStart={{ carbon_home }}/bin/manager.sh start
+ExecStop={{ carbon_home }}/bin/manager.sh stop
+ExecRestart={{ carbon_home }}/bin/manager.sh restart
+PIDFile={{ carbon_home }}/wso2/manager/runtime.pid
 User={{ wso2_user }}
 Group={{ wso2_group }}
 Type=forking
