@@ -43,11 +43,20 @@
         path: "{{ carbon_home }}"
         state: absent
 
-    - name: Unzip WSO2 Stream Processor Package
+    - name: Unzip WSO2 Stream Processor Package from local source
       unarchive:
         src: "{{ product_package_location }}/packs/{{ product_name }}-{{ product_version }}.zip"
         dest: "{{ product_dir }}"
         mode: u=rw,g=r,o=r
+      when: pack_location == "local"
+
+    - name: Unzip WSO2 Stream Processor Package from remote source
+      unarchive:
+        src: "{{ remote_pack }}"
+        dest: "{{ product_dir }}"
+        mode: u=rw,g=r,o=r
+        remote_src: yes
+      when: pack_location == "remote"
 
 # Enable use of the MySQL JDBC driver by uncommenting the following
 #    - name: Copy JDBC Driver
