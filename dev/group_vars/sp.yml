@@ -34,7 +34,7 @@ performance_tuning_file_list:
 pack_location: local
 #pack_location: remote
 #remote_jdk: "<URL_TO_JDK_FILE>"
-#remote_pack: "<URL_TO_APIM_ANALYTICS_PACK>"
+#remote_pack: "<URL_TO_SP_ANALYTICS_PACK>"
 
 # JDK Distributions
 jdk_name: amazon-corretto-8.202.08.2-linux-x64
